@@ -9,7 +9,7 @@ public class Maze {
 	int height;
 	Segment[][] body;
 	int[][] mazeMatrix;
-	
+
 	public Maze(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -367,6 +367,7 @@ public class Maze {
 	
 	public void solveMaze(char[][] currentSolution, int curX, int curY) {
 		
+		// ------------ Only used for debugging; not part of the actual program. ----------------
 		char[][] dummy = currentSolution;
 		for(int i = 0; i < dummy.length; i++) {
       	    for(int j = 0; j < dummy[0].length; j++)
@@ -378,6 +379,7 @@ public class Maze {
             }
             System.out.println(" ");
 		}
+		// --------------------------------------------------------------------------------------
 		
 		if (currentSolution[width-1][height-1] != 0) {
 			setSolution(currentSolution);
@@ -386,27 +388,23 @@ public class Maze {
 		
 		char[] posDir = findDirections(currentSolution, curX, curY);
 		
-		if (posDir.length == 0) {
-			return;
-		} else {
-			for (int i = 0;  i < posDir.length; i++) {
-				char[][] newSolution = copyCharMatrix(currentSolution);
-				if (posDir[i] == 'r') {
-					newSolution[curX][curY] = posDir[i];
-					solveMaze(newSolution, curX + 1, curY);
-				}
-				else if (posDir[i] == 'l') {
-					newSolution[curX][curY] = posDir[i];
-					solveMaze(newSolution, curX - 1, curY);
-				}
-				else if (posDir[i] == 't') {
-					newSolution[curX][curY] = posDir[i];
-					solveMaze(newSolution, curX, curY - 1);
-				}
-				else if (posDir[i] == 'b') {
-					newSolution[curX][curY] = posDir[i];
-					solveMaze(newSolution, curX, curY + 1);
-				}
+		for (int i = 0;  i < posDir.length; i++) {
+			char[][] newSolution = copyCharMatrix(currentSolution);
+			if (posDir[i] == 'r') {
+				newSolution[curX][curY] = posDir[i];
+				solveMaze(newSolution, curX + 1, curY);
+			}
+			else if (posDir[i] == 'l') {
+				newSolution[curX][curY] = posDir[i];
+				solveMaze(newSolution, curX - 1, curY);
+			}
+			else if (posDir[i] == 't') {
+				newSolution[curX][curY] = posDir[i];
+				solveMaze(newSolution, curX, curY - 1);
+			}
+			else if (posDir[i] == 'b') {
+				newSolution[curX][curY] = posDir[i];
+				solveMaze(newSolution, curX, curY + 1);
 			}
 		}
 	}
