@@ -23,6 +23,8 @@ public class Maze {
 	}
 	
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * This method returns an integer matrix representing this maze. A cell in the returned matrix is '1' if the corresponding maze-cell is connected to another
 	 * cell in the maze and '0' otherwise.
 	 */
@@ -39,6 +41,8 @@ public class Maze {
 	}
 	
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * This method returns the orientation of (x2, y2) to (x1, y1). For example: If (x2, y2) is to the left of (x1, y1), this method will return 'l'.
 	 */
 	private static char getOrientation(int x1, int y1, int x2, int y2) {
@@ -69,7 +73,12 @@ public class Maze {
 	}
 	
 	/**
-	 * This method connects points a and b in the maze via a random path.
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
+	 * This method connects points a and b in the maze via a random path. This random path is not entirely random, however. The method fist calculates
+	 * how many steps up or down and left or right one needs to make to go from a to b. It then creates a path from a to b by randomly making the required steps.
+	 * This means that when randomConnect is used on points a and b, it creates a 'random' path that only consists of 2 possible directions. For example: When
+	 * this method is called on a = (2, 2) and b = (5, 3), the random path will consist of 3 steps to the right and 1 step downwards, in a random order.
 	 */
 	public void randomConnect(int[] a, int[] b) {
 		if (a.length != 2 | b.length != 2) 
@@ -150,7 +159,11 @@ public class Maze {
 	}
 	
 	/**
-	 * This method creates a random main path of the maze.
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
+	 * This method creates a random main path of the maze. It does this by first calling MainPathFinder.createMainPath to generate random waypoints for the main path
+	 * and then randomly connects these waypoints. Note that we can't just use randomConnect on the maze's top left and bottom right segment because of the way the method
+	 * randomConnect is implemented (doing so would result in quite a dull maze).
 	 */
 	public void makeMainPath() {
 		int[][] MainPathIntegerMatrix = MainPathFinder.createMainPath(width, height);
@@ -164,6 +177,8 @@ public class Maze {
 	}
 	
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * Returns a LinkedList containing the coordinates of possible directions.
 	 */
 	public LinkedList findPossibleDirections(int x, int y) {
@@ -186,6 +201,8 @@ public class Maze {
 	}
 
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * Creates a random path starting at the given coordinates.
 	 * This method requires that the mazeMatrix is up to date with the maze (Segment[][]) to work properly.
 	 */
@@ -218,6 +235,8 @@ public class Maze {
 	}
 	
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * This method tries to make random branch paths branching out of already existing paths.
 	 */
 	public void makeRandomPaths() {
@@ -244,6 +263,8 @@ public class Maze {
 	}
 	
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * Returns whether the maze contains null-cells.
 	 */
 	public boolean stillEmptySpaceInMaze() {
@@ -258,6 +279,8 @@ public class Maze {
 	}
 	
 	/**
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
 	 * This method fills the maze with random paths.
 	 */
 	public void fillMazeWithRandomPaths() {
@@ -267,7 +290,9 @@ public class Maze {
 	}
 	
 	/**
-	 * This method detects 2x2 areas in the maze that form a loop and places a random edge inside it.
+	 * Direct or indirect auxiliary method for method 'makeMaze'.
+	 * 
+	 * This method detects 2x2 areas in the maze that form a loop and places a random edge inside it
 	 */
 	public void cleanUp() {
 		for (int i = 0; i < width - 1; i++) {
@@ -279,6 +304,9 @@ public class Maze {
 		}
 	}
 	
+	/**
+	 * This method returns a 'maze' object that represents a randomly generated maze.
+	 */
 	public static Maze makeMaze(int width, int height) {
 		Maze maze = new Maze(width, height);
 		maze.makeMainPath();
@@ -288,6 +316,11 @@ public class Maze {
 		return maze;
 	}
 	
+	/* The code below is used for solving the maze.*/
+	
+	/**
+	 * 
+	 */
 	public char[] findDirections(char[][] currentSolution, int curX, int curY) {
 		int length = 0;
 		int index = 0;
@@ -345,6 +378,9 @@ public class Maze {
 		return posDir;
 	}
 	
+	/**
+	 * This method returns a copy of a given 'char'-matrix.
+	 */
 	public char[][] copyCharMatrix(char[][] matrix) {
 		char[][] copy = new char[matrix.length][matrix[0].length];
 		for (int i = 0; i < copy.length; i++) {
@@ -355,6 +391,9 @@ public class Maze {
 		return copy;
 	}
 	
+	/**
+	 * This method transcribes a given solution to the solutionPath fields of Segment-objects that make up the maze.
+	 */
 	public void setSolution(char[][] solutionMatrix) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -365,6 +404,9 @@ public class Maze {
 		}
 	}
 	
+	/**
+	 * This method is the main method used for solving the maze. It uses backtracking to find the solution.
+	 */
 	public void solveMaze(char[][] currentSolution, int curX, int curY) {
 		
 		// ------------ Only used for debugging; not part of the actual program. ----------------

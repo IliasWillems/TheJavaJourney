@@ -1,7 +1,15 @@
 package MazeMaker;
 
 public class Segment {
+	/**
+	 * These fields represent the Segment objects that are connected to this segment in the left, top, right and bottom direction.
+	 * If this segment is not connected in a said direction, the respective field is {@code null}.
+	 */
 	Segment left, top, right, bottom;
+	/**
+	 * This field contains the direction in which the solution path will go, represented by a character ('l', 'r', 't', 'b').
+	 * If this Segment is not part of the solution path, this field will be 0.
+	 */
 	char solutionPath;
 	
 	public Segment() {

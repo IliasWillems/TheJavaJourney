@@ -5,7 +5,16 @@ import java.util.Random;
 
 import LinkedList.LinkedList;
 
+/**
+ * This class defines a method 'createMainPath' that is used to construct the main path (i.e. the 'solution path') of the maze in class 'Maze'. The other methods in this
+ * class are auxiliary methods for 'createMainPath'.
+ * 
+ * In spite of what the name may suggest, this method is not involved in the part of the program that tries to solve the maze.
+ */
 public class MainPathFinder {
+	/**
+	 * This method is/was used merely for testing. It has no use in the rest of the program.
+	 */
 	public static int[][] testMatrix(int width, int height) {
 		int[][] matrix = new int[width][height];
 		int step = 1;
@@ -29,6 +38,17 @@ public class MainPathFinder {
 		return matrix;
 	}
 	
+	/**
+	 * This method returns a matrix that represents numbered waypoints of the solution path in the maze. For example, if this method returns the following matrix
+	 * 
+	 * 1 0 0 3 0 0
+	 * 0 0 0 0 0 0
+	 * 0 0 0 0 0 4
+	 * 0 2 0 0 0 0
+	 * 0 0 0 0 0 5,
+	 * 
+	 * then the solution path will go from waypoint 1, to waypoint 2, ... , to waypoint 5.
+	 */
 	public static int[][] createMainPath(int width, int height) {
 		int[][] matrix = new int[width][height];
 		Random RandomIntegerGenerator = new Random();
