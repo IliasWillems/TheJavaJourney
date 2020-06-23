@@ -1,4 +1,4 @@
-package mazeMaker;
+package MazeMaker;
 
 import org.junit.jupiter.api.Test;
 

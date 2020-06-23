@@ -1,4 +1,4 @@
-package mazeMaker;
+package MazeMaker;
 
 public class MewsTest {
 

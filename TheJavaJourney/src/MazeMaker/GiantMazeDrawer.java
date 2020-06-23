@@ -1,4 +1,4 @@
-package mazeMaker;
+package MazeMaker;
 
 import java.awt.Color;
 import java.awt.Graphics;

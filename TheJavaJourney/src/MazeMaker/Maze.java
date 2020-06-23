@@ -1,4 +1,4 @@
-package mazeMaker;
+package MazeMaker;
 
 import java.util.HashSet;
 import java.util.Random;
