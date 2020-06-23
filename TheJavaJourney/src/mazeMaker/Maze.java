@@ -1,6 +1,8 @@
-package MazeMaker;
+package mazeMaker;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import LinkedList.LinkedList;
 
@@ -9,6 +11,7 @@ public class Maze {
 	int height;
 	Segment[][] body;
 	int[][] mazeMatrix;
+	Set<char[][]> solutionSet;
 
 	public Maze(int width, int height) {
 		this.width = width;
@@ -20,6 +23,7 @@ public class Maze {
 			}
 		}
 		mazeMatrix = new int[width][height];
+		solutionSet = new HashSet<char[][]>();
 	}
 	
 	/**
@@ -394,37 +398,27 @@ public class Maze {
 	/**
 	 * This method transcribes a given solution to the solutionPath fields of Segment-objects that make up the maze.
 	 */
-	public void setSolution(char[][] solutionMatrix) {
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				if (solutionMatrix[i][j] != 0) {
-					body[i][j].solutionPath = solutionMatrix[i][j];
-				}
-			}
-		}
+	public void storeSolution(char[][] solutionMatrix) {
+		char[][] solution = copyCharMatrix(solutionMatrix);
+		solution[width-1][height-1] = 'e'; // Mark end with an 'e'
+		this.solutionSet.add(solution);
+	}
+	
+	/**
+	 * Mad overriding skills from the hood gone wrong
+	 */
+	public void solveMaze() {
+		solveMaze(new char[width][height], 0, 0);
 	}
 	
 	/**
 	 * This method is the main method used for solving the maze. It uses backtracking to find the solution.
 	 */
-	public void solveMaze(char[][] currentSolution, int curX, int curY) {
+	private void solveMaze(char[][] currentSolution, int curX, int curY) {
 		
-		// ------------ Only used for debugging; not part of the actual program. ----------------
-		char[][] dummy = currentSolution;
-		for(int i = 0; i < dummy.length; i++) {
-      	    for(int j = 0; j < dummy[0].length; j++)
-            {
-      	    if (dummy[i][j] >= 0)
-              	System.out.print(" ");
-          	System.out.print(dummy[i][j]+" ");
-          	
-            }
-            System.out.println(" ");
-		}
-		// --------------------------------------------------------------------------------------
-		
-		if (currentSolution[width-1][height-1] != 0) {
-			setSolution(currentSolution);
+		if (curX == width-1 && curY == height-1) {
+			System.out.println("Gotcha!");
+			storeSolution(currentSolution);
 			return;
 		}
 		

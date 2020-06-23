@@ -1,6 +1,4 @@
-package MazeMaker;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
+package mazeMaker;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,32 +6,38 @@ class MazeMakerTest {
 
 	@Test
 	void test() {
-		int width = 20;
-		int height = 10;
+		int width = 4;
+		int height = 4;
 
 		Maze maze = Maze.makeMaze(width, height);
-		maze.solveMaze(new char[width][height], 0, 0);
+		System.out.println("Maze was made");
+		maze.solveMaze();
+		System.out.println("Maze was solved");
 		
-		int[][] solutionPath = new int[width][height];
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				if (maze.body[i][j].solutionPath != 0)
-					solutionPath[i][j] = 1;
+		for (char[][] solution : maze.solutionSet) {
+			int[][] solutionPath = new int[width][height];
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++) {
+					if (solution[i][j] != 0)
+						solutionPath[i][j] = 1;
+				}
 			}
-		}
 		
-		int[][] dummy = solutionPath;
+			int[][] dummy = solutionPath;
 		
-		for(int i = 0; i < dummy.length; i++) {
-      	    for(int j = 0; j < dummy[0].length; j++)
-            {
-      	    if (dummy[i][j] >= 0)
-              	System.out.print(" ");
-          	System.out.print(dummy[i][j]+" ");
-          	
-            }
-            System.out.println(" ");
+			for(int i = 0; i < dummy.length; i++) {
+				for(int j = 0; j < dummy[0].length; j++)
+				{
+					if (dummy[i][j] >= 0)
+						System.out.print(" ");
+					System.out.print(dummy[i][j]+" ");
+					
+				}
+				System.out.println(" ");
+			}
+			System.out.println("------------------------------");
 		}
+
 		
 		/*
 		 * Wanneer ik deze test run, kan maze.solveMaze (op regel 15) SOMS het doolhof oplossen, maar meestal niet. In het geval dat hij geen oplossing vindt,
